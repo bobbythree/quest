@@ -1,5 +1,7 @@
 import { player } from './game-objects/player.js';
 import { tree } from './game-objects/tree.js';
+import { verbs } from './game-commands/verbs.js';
+import { nouns } from './game-commands/nouns.js';
 
 //html elements
 const form = document.getElementById('form');
@@ -100,13 +102,14 @@ form.onsubmit = (e) => {
 function handleTextInput(str) {
   const textInput = str.toLowerCase();
   const tokens = textInput.split(' ');
-  
-  if (tokens[0] == 'look' && !tokens[1]) {
-    console.log('you are in a clearing. you see a lone tree to the west');    
-  } else if (tokens[0] == 'look' && tokens[1] == 'tree') {
-    console.log('It\'s an evergreen tree');    
-  } else {
-    console.log('WTF??');    
-  }
-  
+  if (verbs.includes(tokens[0]) || nouns.includes(tokens[1]))  {
+    if (tokens[0] === 'look' && !tokens[1]) {
+      console.log('you are in a clearing. you see a lone tree to the west');    
+    } else if (tokens[0] === 'look' && tokens[1] === 'tree') {
+      console.log('It\'s an evergreen tree');    
+    } else {
+      console.log('WTF??');    
+    }
+  }   
 } 
+
