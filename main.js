@@ -1,4 +1,4 @@
-
+import { keyDown, keyUp, movePlayer } from './player-movement.js';
 import {player, rock, tree} from './game-objects.js'
 import { verbs } from './game-commands/verbs.js';
 import { nouns, nounAttributes } from './game-commands/nouns.js';
@@ -17,10 +17,10 @@ const ctx = canvas.getContext('2d');
 //game loop
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
-  drawPlayer();
-  movePlayer();
-  drawTree();
   drawRock();
+  drawPlayer();
+  drawTree();
+  movePlayer();
   if (player.x <= canvas.width - 600) player.x = canvas.width - 600;
   if (player.x >= canvas.width - player.w) player.x = canvas.width - player.w;
   if (player.y <= canvas.height - 400) player.y = canvas.height - 400;
@@ -31,13 +31,12 @@ function animate() {
 animate();
 
 //draw player
-player
 function drawPlayer() {
   ctx.fillStyle = 'hsl(300, 30%, 60%)';
   ctx.fillRect(player.x, player.y, player.w, player.h);
 }
 
-//draw trees
+//draw tree
 function drawTree() {
   ctx.fillStyle = "green";
   ctx.beginPath();
@@ -54,48 +53,6 @@ function drawRock() {
   ctx.beginPath();
   ctx.arc(rock.x, rock.y, rock.r, 0, Math.PI * 2)
   ctx.fill();
-}
-
-//arrow key controls
-function keyDown(e) {
-  switch(e.key) {
-    case 'ArrowLeft':
-      player.leftPressed = true;
-      break;
-    case 'ArrowRight':
-      player.rightPressed = true;
-      break;
-    case 'ArrowUp':
-      player.upPressed = true;
-      break;
-    case 'ArrowDown':
-      player.downPressed = true;
-      break;
-  }
-}
-
-function keyUp(e) {
-  switch(e.key) {
-    case 'ArrowLeft':
-      player.leftPressed = false;
-      break;
-    case 'ArrowRight':
-      player.rightPressed = false;
-      break;
-    case 'ArrowUp':
-      player.upPressed = false;
-      break;
-    case 'ArrowDown':
-      player.downPressed = false;
-      break;
-  }
-}
-
-function movePlayer() {  
-  if (player.leftPressed == true) player.x -= player.vx;
-  if (player.rightPressed == true) player.x += player.vx;
-  if (player.upPressed == true) player.y -= player.vy;
-  if (player.downPressed == true) player.y += player.vy;  
 }
 
 //event listeners
