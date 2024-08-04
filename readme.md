@@ -1,0 +1,1 @@
+This is an adventure game based on the style of old Sierra On-Line games such as King's Quest, Space Quest etc.

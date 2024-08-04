@@ -1,0 +1,43 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#main-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#game-container {
+  width: 600px;
+  display: flex;
+  padding-top: 5rem;
+  align-items: center;  
+  flex-direction: column;
+}
+
+#canvas {
+  background-color: #181818;
+}
+
+#text-input-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 8vh;
+  width: 600px;
+  background-color: gray;
+}
+
+#input {
+  width: 15rem;
+  height: 2rem;
+  padding-left: 1rem;
+}
+
+#submit {
+  width: 5rem;
+  height: 2rem;
+}
