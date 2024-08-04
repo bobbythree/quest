@@ -77,9 +77,16 @@ function handleTextInput(str) {
 }
 
 function runCommand(verb, noun) {
-  switch(verb) {
-    case 'look':
-      console.log(nounAttributes[noun].description);
-      break;
-  }  
+  
+  if (verb === 'look') {
+    console.log(nounAttributes[noun].description);
+  } 
+  
+  if (verb === 'get' && nounAttributes[noun].canGet) {
+    console.log('ok');
+    player.inventory.push(noun);     
+  } else if (verb === 'get' && !nounAttributes[noun].canGet) {
+    console.log('you can\'t get that');
+    
+  }    
 }

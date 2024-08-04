@@ -8,13 +8,14 @@ export const player = {
   leftPressed: false,
   rightPressed: false,
   upPressed: false,
-  downPressed: false
+  downPressed: false,
+  inventory: []
 }
 
 export const rock = {
   x: 300,
   y: 395,
-  r: 5,
+  r: 5  
 }
 
 export const tree = {
@@ -23,5 +24,5 @@ export const tree = {
   nextX: 490,
   nextY: 350,
   lastX: 480,
-  lastY: 400  
+  lastY: 400   
 }
