@@ -14,19 +14,7 @@ canvas.width = 600;
 canvas.height = 400;
 const ctx = canvas.getContext('2d');
 
-//player
-function drawPlayer() {
-  ctx.fillStyle = 'hsl(300, 30%, 60%)';
-  ctx.fillRect(player.x, player.y, player.w, player.h);
-}
-
-function movePlayer() {  
-  if (player.leftPressed == true) player.x -= player.vx;
-  if (player.rightPressed == true) player.x += player.vx;
-  if (player.upPressed == true) player.y -= player.vy;
-  if (player.downPressed == true) player.y += player.vy;  
-}
-
+//game loop
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
   drawPlayer();
@@ -42,7 +30,14 @@ function animate() {
 }
 animate();
 
-//trees
+//draw player
+player
+function drawPlayer() {
+  ctx.fillStyle = 'hsl(300, 30%, 60%)';
+  ctx.fillRect(player.x, player.y, player.w, player.h);
+}
+
+//draw trees
 function drawTree() {
   ctx.fillStyle = "green";
   ctx.beginPath();
@@ -53,7 +48,7 @@ function drawTree() {
   ctx.fill();  
 }
 
-//rock
+//draw rock
 function drawRock() {
   ctx.fillStyle = 'slategray';
   ctx.beginPath();
@@ -61,7 +56,7 @@ function drawRock() {
   ctx.fill();
 }
 
-//event listeners
+//arrow key controls
 function keyDown(e) {
   switch(e.key) {
     case 'ArrowLeft':
@@ -96,7 +91,14 @@ function keyUp(e) {
   }
 }
 
-//keyboard events
+function movePlayer() {  
+  if (player.leftPressed == true) player.x -= player.vx;
+  if (player.rightPressed == true) player.x += player.vx;
+  if (player.upPressed == true) player.y -= player.vy;
+  if (player.downPressed == true) player.y += player.vy;  
+}
+
+//event listeners
 window.addEventListener('keydown', keyDown);
 window.addEventListener('keyup', keyUp);
 

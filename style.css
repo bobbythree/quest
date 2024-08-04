@@ -40,4 +40,5 @@
 #submit {
   width: 5rem;
   height: 2rem;
+  display: none;
 }
