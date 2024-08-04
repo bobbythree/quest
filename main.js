@@ -1,7 +1,7 @@
-import { player } from './game-objects/player.js';
-import { tree } from './game-objects/tree.js';
+
+import {player, rock, tree} from './game-objects.js'
 import { verbs } from './game-commands/verbs.js';
-import { nouns } from './game-commands/nouns.js';
+import { nouns, nounAttributes } from './game-commands/nouns.js';
 
 //html elements
 const form = document.getElementById('form');
@@ -32,6 +32,7 @@ function animate() {
   drawPlayer();
   movePlayer();
   drawTree();
+  drawRock();
   if (player.x <= canvas.width - 600) player.x = canvas.width - 600;
   if (player.x >= canvas.width - player.w) player.x = canvas.width - player.w;
   if (player.y <= canvas.height - 400) player.y = canvas.height - 400;
@@ -52,6 +53,13 @@ function drawTree() {
   ctx.fill();  
 }
 
+//rock
+function drawRock() {
+  ctx.fillStyle = 'slategray';
+  ctx.beginPath();
+  ctx.arc(rock.x, rock.y, rock.r, 0, Math.PI * 2)
+  ctx.fill();
+}
 
 //event listeners
 function keyDown(e) {
@@ -102,14 +110,17 @@ form.onsubmit = (e) => {
 function handleTextInput(str) {
   const textInput = str.toLowerCase();
   const tokens = textInput.split(' ');
-  if (verbs.includes(tokens[0]) || nouns.includes(tokens[1]))  {
-    if (tokens[0] === 'look' && !tokens[1]) {
-      console.log('you are in a clearing. you see a lone tree to the west');    
-    } else if (tokens[0] === 'look' && tokens[1] === 'tree') {
-      console.log('It\'s an evergreen tree');    
-    } else {
-      console.log('WTF??');    
-    }
-  }   
-} 
+  if (verbs.includes(tokens[0]) && nouns.includes(tokens[1])) {
+    runCommand(tokens[0], tokens[1]);
+  } else {
+    console.log('I don\'t understand');    
+  }
+}
 
+function runCommand(verb, noun) {
+  switch(verb) {
+    case 'look':
+      console.log(nounAttributes[noun].description);
+      break;
+  }  
+}
