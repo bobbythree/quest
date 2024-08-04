@@ -1,4 +1,5 @@
 import { player } from './game-objects/player.js';
+import { tree } from './game-objects/tree.js';
 
 //html elements
 const form = document.getElementById('form');
@@ -28,7 +29,7 @@ function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
   drawPlayer();
   movePlayer();
-  drawTrees();
+  drawTree();
   if (player.x <= canvas.width - 600) player.x = canvas.width - 600;
   if (player.x >= canvas.width - player.w) player.x = canvas.width - player.w;
   if (player.y <= canvas.height - 400) player.y = canvas.height - 400;
@@ -38,27 +39,15 @@ function animate() {
 }
 animate();
 
-//tree
-function drawTrees() {
+//trees
+function drawTree() {
   ctx.fillStyle = "green";
   ctx.beginPath();
-  ctx.moveTo(500, 400);
-  ctx.lineTo(490, 350);
-  ctx.lineTo(480, 400);
+  ctx.moveTo(tree.startX, tree.startY);
+  ctx.lineTo(tree.nextX, tree.nextY);
+  ctx.lineTo(tree.lastX, tree.lastY);
   ctx.closePath();
-  ctx.fill();
-  ctx.beginPath();
-  ctx.moveTo(480, 400);
-  ctx.lineTo(470, 350);
-  ctx.lineTo(460, 400);
-  ctx.closePath();
-  ctx.fill();
-  ctx.beginPath();
-  ctx.moveTo(460, 400);
-  ctx.lineTo(450, 350);
-  ctx.lineTo(440, 400);
-  ctx.closePath();
-  ctx.fill();
+  ctx.fill();  
 }
 
 
@@ -104,5 +93,20 @@ window.addEventListener('keyup', keyUp);
 //text input
 form.onsubmit = (e) => {
   e.preventDefault();  
-  console.log(input.value);
+  handleTextInput(input.value);
+  input.value = '';
 }
+
+function handleTextInput(str) {
+  const textInput = str.toLowerCase();
+  const tokens = textInput.split(' ');
+  
+  if (tokens[0] == 'look' && !tokens[1]) {
+    console.log('you are in a clearing. you see a lone tree to the west');    
+  } else if (tokens[0] == 'look' && tokens[1] == 'tree') {
+    console.log('It\'s an evergreen tree');    
+  } else {
+    console.log('WTF??');    
+  }
+  
+} 
