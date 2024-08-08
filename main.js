@@ -86,18 +86,25 @@ function runCommand(verb, noun) {
   if (verb === 'get' && gameObjects[noun].canGet) {
     if (distance < 50) {
       console.log('ok');
-      gameObjects.rock.x = -100;
+      gameObjects[noun].x = -100;
       gameObjects.player.inventory.push(noun);
-      console.log(gameObjects.player.inventory);
-      
+      console.log(gameObjects.player.inventory);      
     } else {
       console.log('get closer');
-      console.log(distance);
-      
-    }
-         
-  } else if (verb === 'get' && !nounAttributes[noun].canGet) {
-    console.log('you can\'t get that');
+      console.log(distance);      
+    }         
+  } else if (verb === 'get' && !gameObjects[noun].canGet) {
+    console.log('you can\'t get that');    
+  }
+  
+  const item = gameObjects.player.inventory.indexOf(noun) 
+  if (verb === 'drop' && gameObjects.player.inventory.includes(noun)) {
+    gameObjects.player.inventory.splice(item, 1);
+    console.log('ok');
+    gameObjects[noun].x = gameObjects.player.x + 25;
+    console.log(gameObjects.player.inventory);    
+  } else if (verb === 'drop' && !gameObjects.player.inventory.includes(noun)) {
+    console.log(`you do not have a ${noun}`);
     
-  }    
+  }
 }
