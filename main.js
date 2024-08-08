@@ -1,7 +1,7 @@
 import { keyDown, keyUp, movePlayer } from './player-movement.js';
-import {player, rock, tree} from './game-objects.js'
+import {gameObjects} from './game-objects.js';
 import { verbs } from './game-commands/verbs.js';
-import { nouns, nounAttributes } from './game-commands/nouns.js';
+import { nouns } from './game-commands/nouns.js';
 
 //html elements
 const form = document.getElementById('form');
@@ -21,10 +21,10 @@ function animate() {
   drawPlayer();
   drawTree();
   movePlayer();
-  if (player.x <= canvas.width - 600) player.x = canvas.width - 600;
-  if (player.x >= canvas.width - player.w) player.x = canvas.width - player.w;
-  if (player.y <= canvas.height - 400) player.y = canvas.height - 400;
-  if (player.y >= canvas.height - player.w) player.y = canvas.height - player.h;
+  if (gameObjects.player.x <= canvas.width - 600) player.x = canvas.width - 600;
+  if (gameObjects.player.x >= canvas.width - gameObjects.player.w) player.x = canvas.width - player.w;
+  if (gameObjects.player.y <= canvas.height - 400) gameObjects.player.y = canvas.height - 400;
+  if (gameObjects.player.y >= canvas.height - gameObjects.player.w) gameObjects.player.y = canvas.height - gameObjects.player.h;
 
   requestAnimationFrame(animate)
 }
@@ -33,16 +33,16 @@ animate();
 //draw player
 function drawPlayer() {
   ctx.fillStyle = 'hsl(300, 30%, 60%)';
-  ctx.fillRect(player.x, player.y, player.w, player.h);
+  ctx.fillRect(gameObjects.player.x, gameObjects.player.y, gameObjects.player.w, gameObjects.player.h);
 }
 
 //draw tree
 function drawTree() {
   ctx.fillStyle = "green";
   ctx.beginPath();
-  ctx.moveTo(tree.startX, tree.startY);
-  ctx.lineTo(tree.nextX, tree.nextY);
-  ctx.lineTo(tree.lastX, tree.lastY);
+  ctx.moveTo(gameObjects.tree.startX, gameObjects.tree.startY);
+  ctx.lineTo(gameObjects.tree.nextX, gameObjects.tree.nextY);
+  ctx.lineTo(gameObjects.tree.lastX, gameObjects.tree.lastY);
   ctx.closePath();
   ctx.fill();  
 }
@@ -51,7 +51,7 @@ function drawTree() {
 function drawRock() {
   ctx.fillStyle = 'slategray';
   ctx.beginPath();
-  ctx.arc(rock.x, rock.y, rock.r, 0, Math.PI * 2)
+  ctx.arc(gameObjects.rock.x, gameObjects.rock.y, gameObjects.rock.r, 0, Math.PI * 2)
   ctx.fill();
 }
 
@@ -77,18 +77,18 @@ function handleTextInput(str) {
 }
 
 function runCommand(verb, noun) {
-  const currentNoun = nounAttributes[noun];
-  const distance = Math.hypot(currentNoun.x - player.x, currentNoun.y - player.y);
+  const currentNoun = gameObjects[noun];
+  const distance = Math.hypot(currentNoun.x - gameObjects.player.x, currentNoun.y - gameObjects.player.y);
   if (verb === 'look') {
-    console.log(nounAttributes[noun].description);
+    console.log(gameObjects[noun].description);
   } 
   
-  if (verb === 'get' && nounAttributes[noun].canGet) {
+  if (verb === 'get' && gameObjects[noun].canGet) {
     if (distance < 50) {
       console.log('ok');
-      rock.x = -100;
-      player.inventory.push(noun);
-      console.log(player.inventory);
+      gameObjects.rock.x = -100;
+      gameObjects.player.inventory.push(noun);
+      console.log(gameObjects.player.inventory);
       
     } else {
       console.log('get closer');

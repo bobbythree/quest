@@ -1,19 +1,19 @@
-import { player } from './game-objects.js'
+import { gameObjects } from './game-objects.js'
 
 //arrow key controls
 export function keyDown(e) {
   switch(e.key) {
     case 'ArrowLeft':
-      player.leftPressed = true;
+      gameObjects.player.leftPressed = true;
       break;
     case 'ArrowRight':
-      player.rightPressed = true;
+      gameObjects.player.rightPressed = true;
       break;
     case 'ArrowUp':
-      player.upPressed = true;
+      gameObjects.player.upPressed = true;
       break;
     case 'ArrowDown':
-      player.downPressed = true;
+      gameObjects.player.downPressed = true;
       break;
   }
 }
@@ -21,23 +21,23 @@ export function keyDown(e) {
 export function keyUp(e) {
   switch(e.key) {
     case 'ArrowLeft':
-      player.leftPressed = false;
+      gameObjects.player.leftPressed = false;
       break;
     case 'ArrowRight':
-      player.rightPressed = false;
+      gameObjects.player.rightPressed = false;
       break;
     case 'ArrowUp':
-      player.upPressed = false;
+      gameObjects.player.upPressed = false;
       break;
     case 'ArrowDown':
-      player.downPressed = false;
+      gameObjects.player.downPressed = false;
       break;
   }
 }
 
 export function movePlayer() {  
-  if (player.leftPressed == true) player.x -= player.vx;
-  if (player.rightPressed == true) player.x += player.vx;
-  if (player.upPressed == true) player.y -= player.vy;
-  if (player.downPressed == true) player.y += player.vy;  
+  if (gameObjects.player.leftPressed == true) gameObjects.player.x -= gameObjects.player.vx;
+  if (gameObjects.player.rightPressed == true) gameObjects.player.x += gameObjects.player.vx;
+  if (gameObjects.player.upPressed == true) gameObjects.player.y -= gameObjects.player.vy;
+  if (gameObjects.player.downPressed == true) gameObjects.player.y += gameObjects.player.vy;  
 }
