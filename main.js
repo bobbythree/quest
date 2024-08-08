@@ -77,14 +77,25 @@ function handleTextInput(str) {
 }
 
 function runCommand(verb, noun) {
-  
+  const currentNoun = nounAttributes[noun];
+  const distance = Math.hypot(currentNoun.x - player.x, currentNoun.y - player.y);
   if (verb === 'look') {
     console.log(nounAttributes[noun].description);
   } 
   
   if (verb === 'get' && nounAttributes[noun].canGet) {
-    console.log('ok');
-    player.inventory.push(noun);     
+    if (distance < 50) {
+      console.log('ok');
+      rock.x = -100;
+      player.inventory.push(noun);
+      console.log(player.inventory);
+      
+    } else {
+      console.log('get closer');
+      console.log(distance);
+      
+    }
+         
   } else if (verb === 'get' && !nounAttributes[noun].canGet) {
     console.log('you can\'t get that');
     

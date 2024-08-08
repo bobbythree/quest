@@ -7,7 +7,10 @@ export const nounAttributes = {
   },
   rock: {
     description: 'Looks like a regular rock to me.',
-    canGet: true
+    canGet: true,
+    x: 300,
+    y: 395,
+    r: 5
   },
   sky: {
     description: 'well, it\'s what\'s up.',
