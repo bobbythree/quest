@@ -2,6 +2,7 @@ import { keyDown, keyUp, movePlayer } from './player-movement.js';
 import {gameObjects} from './game-objects.js';
 import { verbs } from './game-commands/verbs.js';
 import { nouns } from './game-commands/nouns.js';
+import { prepositions } from './game-commands/prepositions.js';
 
 //html elements
 const form = document.getElementById('form');
