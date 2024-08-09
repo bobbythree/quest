@@ -75,16 +75,18 @@ form.onsubmit = (e) => {
 function handleTextInput(str) {
   const textInput = str.toLowerCase();
   const tokens = textInput.split(' ');
-  if (verbs.includes(tokens[0]) && nouns.includes(tokens[1])) {
+  if (verbs.includes(tokens[0]) && nouns.includes(tokens[1]) && !tokens[2] && !tokens[3]) {
     runCommand(tokens[0], tokens[1]);
+  } else if (verbs.includes(tokens[0]) && nouns.includes(tokens[1]) && prepositions.includes(tokens[2]) && nouns.includes(tokens[3])) {       
+    runCommand(tokens[0], tokens[1], tokens[2], tokens[3]);    
   } else {
-    console.log('I don\'t understand');    
+    console.log('I don\'t understand');
   }
 }
 
-function runCommand(verb, noun) {
+function runCommand(verb, noun, preposition, directObject) {
   const currentNoun = gameObjects[noun];
-  const distance = Math.hypot(currentNoun.x - player.x, currentNoun.y - gameObjects.player.y);
+  const distance = Math.hypot(currentNoun.x - player.x, currentNoun.y - player.y);
   if (verb === 'look') {
     console.log(currentNoun.description);
   } 
@@ -113,4 +115,10 @@ function runCommand(verb, noun) {
     console.log(`you do not have a ${noun}`);
     
   }
+
+  if (verb === 'use') {
+    console.log(`you ${verb} the ${noun} ${preposition} the ${directObject}`)    
+  }
 }
+
+
