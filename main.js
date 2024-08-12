@@ -51,7 +51,7 @@ function drawTree() {
   ctx.lineTo(tree.nextX, tree.nextY);
   ctx.lineTo(tree.lastX, tree.lastY);
   ctx.closePath();
-  ctx.fill();  
+  ctx.fill();
 }
 
 //draw rock
@@ -92,7 +92,7 @@ function handleTextInput(str) {
 function runCommand(verb, noun, preposition, indirectObject) {
   const currentNoun = gameObjects[noun];  
   if (verb === 'look' && noun === undefined) { 
-    displayText('You are in a clearing. You see a tree to the east.')           
+    displayText('You are in a clearing. You see a rock on the ground. To the east stands a lone tree.')           
   } else if (verb === 'look' && nouns.includes(noun)) {
     displayText(currentNoun.description);
   }
@@ -147,7 +147,7 @@ function drop(noun) {
   const item = player.inventory.indexOf(noun); 
   player.inventory.splice(item, 1);
   displayText('ok');
-  currentNoun.x = player.x + 25;
+  currentNoun.x = player.x + 25;  
   console.log(player.inventory); 
 }
 
@@ -159,8 +159,7 @@ function throwObject(verb, noun, preposition, indirectObject) {
     console.log(player.inventory);          
     rock.x = 490;
     rock.y = 360;
-  } else if (indirectObject === 'sky') {
-    
+  } else if (indirectObject === 'sky') {    
     player.inventory.splice(item, 1);
     console.log(player.inventory);
     rock.x = - 100;
