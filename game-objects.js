@@ -17,7 +17,8 @@ export const gameObjects = {
     y: 395,
     r: 5,
     description: 'Looks like a regular rock to me.',
-    canGet: true
+    canGet: true,
+    canUse: true
   },
   tree: {
     startX: 500,

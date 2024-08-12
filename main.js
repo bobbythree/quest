@@ -2,6 +2,7 @@ import { keyDown, keyUp, movePlayer } from './player-movement.js';
 import {gameObjects} from './game-objects.js';
 import { verbs } from './game-commands/verbs.js';
 import { nouns } from './game-commands/nouns.js';
+import { prepositions } from './game-commands/prepositions.js';
 
 //html elements
 const form = document.getElementById('form');
@@ -22,9 +23,9 @@ const ctx = canvas.getContext('2d');
 //game loop
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
-  drawRock();
   drawPlayer();
   drawTree();
+  drawRock();
   movePlayer();
   if (player.x <= canvas.width - 600) player.x = canvas.width - 600;
   if (player.x >= canvas.width - player.w) player.x = canvas.width - player.w;
@@ -74,18 +75,22 @@ form.onsubmit = (e) => {
 function handleTextInput(str) {
   const textInput = str.toLowerCase();
   const tokens = textInput.split(' ');
-  if (verbs.includes(tokens[0]) && nouns.includes(tokens[1])) {
+  if (verbs.includes(tokens[0] && !tokens[1] && !tokens[2])&& !tokens[3]) {
+    runCommand(tokens[0]);    
+  } else if (verbs.includes(tokens[0]) && nouns.includes(tokens[1]) && !tokens[2] && !tokens[3]) {
     runCommand(tokens[0], tokens[1]);
+  } else if (verbs.includes(tokens[0]) && nouns.includes(tokens[1]) && prepositions.includes(tokens[2]) && nouns.includes(tokens[3])) {       
+    runCommand(tokens[0], tokens[1], tokens[2], tokens[3]);    
   } else {
-    console.log('I don\'t understand');    
+    console.log('I don\'t understand');
   }
 }
 
-function runCommand(verb, noun) {
+function runCommand(verb, noun, preposition, directObject) {
   const currentNoun = gameObjects[noun];
-  const distance = Math.hypot(currentNoun.x - player.x, currentNoun.y - gameObjects.player.y);
-  if (verb === 'look') {
-    console.log(currentNoun.description);
+  const distance = Math.hypot(currentNoun.x - player.x, currentNoun.y - player.y);
+  if (verb === 'look') {   
+      console.log(currentNoun.description);    
   } 
   
   if (verb === 'get' && currentNoun.canGet) {
@@ -109,7 +114,18 @@ function runCommand(verb, noun) {
     currentNoun.x = player.x + 25;
     console.log(player.inventory);    
   } else if (verb === 'drop' && !player.inventory.includes(noun)) {
-    console.log(`you do not have a ${noun}`);
-    
+    console.log(`you do not have a ${noun}`);    
+  }
+
+  if (verb === 'throw' && player.inventory.includes(noun)) {
+    console.log(`you ${verb} the ${noun} ${preposition} the ${directObject}`)
+    if (directObject === 'tree') {
+      rock.x = 490;
+      rock.y = 360;
+    } 
+  } else if (verb === 'throw' && !player.inventory.includes(noun)) {
+    console.log(`you do not have a ${noun}!`);    
   }
 }
+
+
