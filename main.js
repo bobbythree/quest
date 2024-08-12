@@ -87,7 +87,7 @@ function handleTextInput(str) {
   }
 }
 
-function runCommand(verb, noun, preposition, directObject) {
+function runCommand(verb, noun, preposition, indirectObject) {
   const currentNoun = gameObjects[noun];  
   if (verb === 'look') { 
     displayText(currentNoun.description);            
@@ -105,11 +105,13 @@ function runCommand(verb, noun, preposition, directObject) {
     displayText(`you don\'t have a ${noun}`);
   }
 
-  if (verb === 'throw' && player.inventory.includes(noun)) {
-    throwObject(verb, noun, preposition, directObject);    
+  if (verb === 'throw' && player.inventory.includes(noun) && preposition === undefined && indirectObject === undefined) {
+    displayText(`${verb} ${noun} at what??`);
+  } else if (verb === 'throw' && player.inventory.includes(noun)) {
+    throwObject(verb, noun, preposition, indirectObject);
   } else if (verb === 'throw' && !player.inventory.includes(noun)) {
     displayText(`you don\'t have a ${noun}`);   
-  }
+  }  
 }
 
 //funcs
@@ -145,18 +147,23 @@ function drop(noun) {
   console.log(player.inventory); 
 }
 
-function throwObject(verb, noun, preposition, directObject) {
-  displayText(`you ${verb} the ${noun} ${preposition} the ${directObject}`);
+function throwObject(verb, noun, preposition, indirectObject) {
   const item = player.inventory.indexOf(noun);
-  player.inventory.splice(item, 1);
-  console.log(player.inventory); 
-  if (directObject === 'tree') {           
+  displayText(`you ${verb} the ${noun} ${preposition} the ${indirectObject}`);   
+  if (indirectObject === 'tree') {    
+    player.inventory.splice(item, 1);
+    console.log(player.inventory);          
     rock.x = 490;
     rock.y = 360;
-  } else if (directObject === 'sky') {
+  } else if (indirectObject === 'sky') {
+    
+    player.inventory.splice(item, 1);
+    console.log(player.inventory);
     rock.x = - 100;
     setTimeout(() => {
       rock.x = 400
     }, 4000);
+  } else {
+    displayText('why tho?')
   }
 }
