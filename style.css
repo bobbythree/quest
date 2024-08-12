@@ -18,8 +18,15 @@
   flex-direction: column;
 }
 
+#text-display {
+  position: absolute;
+  top: 20%;
+  font-family: 'Cabin Sketch', sans-serif;
+  font-size: 28px;
+}
+
 #canvas {
-  background-color: #181818;
+  background-color: #c6ecf5;
 }
 
 #text-input-div {

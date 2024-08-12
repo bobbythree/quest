@@ -5,6 +5,7 @@ import { nouns } from './game-commands/nouns.js';
 import { prepositions } from './game-commands/prepositions.js';
 
 //html elements
+const textDisplay = document.getElementById('text-display');
 const form = document.getElementById('form');
 const input = document.getElementById('input');
 const submit = document.getElementById('submit');
@@ -82,50 +83,56 @@ function handleTextInput(str) {
   } else if (verbs.includes(tokens[0]) && nouns.includes(tokens[1]) && prepositions.includes(tokens[2]) && nouns.includes(tokens[3])) {       
     runCommand(tokens[0], tokens[1], tokens[2], tokens[3]);    
   } else {
-    console.log('I don\'t understand');
+    displayText('I don\'t understand')
   }
 }
 
 function runCommand(verb, noun, preposition, directObject) {
   const currentNoun = gameObjects[noun];
   const distance = Math.hypot(currentNoun.x - player.x, currentNoun.y - player.y);
-  if (verb === 'look') {   
-      console.log(currentNoun.description);    
+  if (verb === 'look') { 
+    displayText(currentNoun.description);            
   } 
   
   if (verb === 'get' && currentNoun.canGet) {
     if (distance < 50) {
-      console.log('ok');
+      displayText('ok');
       currentNoun.x = -100;
       player.inventory.push(noun);
       console.log(player.inventory);      
     } else {
-      console.log('get closer');
+      displayText('get closer');
       console.log(distance);      
     }         
   } else if (verb === 'get' && !currentNoun.canGet) {
-    console.log('you can\'t get that');    
+    displayText('you can\'t get that');    
   }
   
   const item = player.inventory.indexOf(noun) 
   if (verb === 'drop' && player.inventory.includes(noun)) {
     player.inventory.splice(item, 1);
-    console.log('ok');
+    displayText('ok');
     currentNoun.x = player.x + 25;
     console.log(player.inventory);    
   } else if (verb === 'drop' && !player.inventory.includes(noun)) {
-    console.log(`you do not have a ${noun}`);    
+    displayText(`you don\'t have a ${noun}`);
   }
 
   if (verb === 'throw' && player.inventory.includes(noun)) {
-    console.log(`you ${verb} the ${noun} ${preposition} the ${directObject}`)
+    displayText(`you ${verb} the ${noun} ${preposition} the ${directObject}`);
     if (directObject === 'tree') {
       rock.x = 490;
       rock.y = 360;
     } 
   } else if (verb === 'throw' && !player.inventory.includes(noun)) {
-    console.log(`you do not have a ${noun}!`);    
+    displayText(`you don\'t have a ${noun}`);   
   }
 }
 
-
+function displayText(str) {
+  textDisplay.innerHTML = str;
+  setTimeout(() => {
+    textDisplay.style.display = 'none'
+  }, 3000);
+  textDisplay.style.display = 'block';  
+}
