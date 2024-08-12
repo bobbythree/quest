@@ -23,9 +23,9 @@ const ctx = canvas.getContext('2d');
 //game loop
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
-  drawRock();
   drawPlayer();
   drawTree();
+  drawRock();
   movePlayer();
   if (player.x <= canvas.width - 600) player.x = canvas.width - 600;
   if (player.x >= canvas.width - player.w) player.x = canvas.width - player.w;
@@ -114,12 +114,17 @@ function runCommand(verb, noun, preposition, directObject) {
     currentNoun.x = player.x + 25;
     console.log(player.inventory);    
   } else if (verb === 'drop' && !player.inventory.includes(noun)) {
-    console.log(`you do not have a ${noun}`);
-    
+    console.log(`you do not have a ${noun}`);    
   }
 
-  if (verb === 'use') {
-    console.log(`you ${verb} the ${noun} ${preposition} the ${directObject}`)    
+  if (verb === 'throw' && player.inventory.includes(noun)) {
+    console.log(`you ${verb} the ${noun} ${preposition} the ${directObject}`)
+    if (directObject === 'tree') {
+      rock.x = 490;
+      rock.y = 360;
+    } 
+  } else if (verb === 'throw' && !player.inventory.includes(noun)) {
+    console.log(`you do not have a ${noun}!`);    
   }
 }
 

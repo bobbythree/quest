@@ -1,1 +1,1 @@
-export const prepositions = ['with', 'on', 'to', 'from']
+export const prepositions = ['with', 'on', 'to', 'from', 'at']
