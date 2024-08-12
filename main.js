@@ -88,14 +88,44 @@ function handleTextInput(str) {
 }
 
 function runCommand(verb, noun, preposition, directObject) {
-  const currentNoun = gameObjects[noun];
-  const distance = Math.hypot(currentNoun.x - player.x, currentNoun.y - player.y);
+  const currentNoun = gameObjects[noun];  
   if (verb === 'look') { 
     displayText(currentNoun.description);            
   } 
   
   if (verb === 'get' && currentNoun.canGet) {
-    if (distance < 50) {
+    get(noun);          
+  } else if (verb === 'get' && !currentNoun.canGet) {
+    displayText('you can\'t get that');    
+  }  
+  
+  if (verb === 'drop' && player.inventory.includes(noun)) {
+    drop(noun);       
+  } else if (verb === 'drop' && !player.inventory.includes(noun)) {
+    displayText(`you don\'t have a ${noun}`);
+  }
+
+  if (verb === 'throw' && player.inventory.includes(noun)) {
+    throwObject(verb, noun, preposition, directObject);    
+  } else if (verb === 'throw' && !player.inventory.includes(noun)) {
+    displayText(`you don\'t have a ${noun}`);   
+  }
+}
+
+//funcs
+function displayText(str) {
+  textDisplay.innerHTML = str;
+  setTimeout(() => {
+    textDisplay.style.display = 'none'
+  }, 3000);
+  textDisplay.style.display = 'block';  
+}
+
+function get(noun) {
+  const currentNoun = gameObjects[noun];
+  const distance = Math.hypot(currentNoun.x - player.x, currentNoun.y - player.y);
+
+  if (distance < 50) {
       displayText('ok');
       currentNoun.x = -100;
       player.inventory.push(noun);
@@ -104,37 +134,29 @@ function runCommand(verb, noun, preposition, directObject) {
       displayText('get closer');
       console.log(distance);      
     }         
-  } else if (verb === 'get' && !currentNoun.canGet) {
-    displayText('you can\'t get that');    
-  }
-  
-  const item = player.inventory.indexOf(noun); 
-  if (verb === 'drop' && player.inventory.includes(noun)) {
-    player.inventory.splice(item, 1);
-    displayText('ok');
-    currentNoun.x = player.x + 25;
-    console.log(player.inventory);    
-  } else if (verb === 'drop' && !player.inventory.includes(noun)) {
-    displayText(`you don\'t have a ${noun}`);
-  }
-
-  if (verb === 'throw' && player.inventory.includes(noun)) {
-    displayText(`you ${verb} the ${noun} ${preposition} the ${directObject}`);
-    player.inventory.splice(item, 1);
-    console.log(player.inventory); 
-    if (directObject === 'tree') {           
-      rock.x = 490;
-      rock.y = 360;
-    } 
-  } else if (verb === 'throw' && !player.inventory.includes(noun)) {
-    displayText(`you don\'t have a ${noun}`);   
-  }
 }
 
-function displayText(str) {
-  textDisplay.innerHTML = str;
-  setTimeout(() => {
-    textDisplay.style.display = 'none'
-  }, 3000);
-  textDisplay.style.display = 'block';  
+function drop(noun) {
+  const currentNoun = gameObjects[noun];
+  const item = player.inventory.indexOf(noun); 
+  player.inventory.splice(item, 1);
+  displayText('ok');
+  currentNoun.x = player.x + 25;
+  console.log(player.inventory); 
+}
+
+function throwObject(verb, noun, preposition, directObject) {
+  displayText(`you ${verb} the ${noun} ${preposition} the ${directObject}`);
+  const item = player.inventory.indexOf(noun);
+  player.inventory.splice(item, 1);
+  console.log(player.inventory); 
+  if (directObject === 'tree') {           
+    rock.x = 490;
+    rock.y = 360;
+  } else if (directObject === 'sky') {
+    rock.x = - 100;
+    setTimeout(() => {
+      rock.x = 400
+    }, 4000);
+  }
 }
