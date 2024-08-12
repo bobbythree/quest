@@ -108,7 +108,7 @@ function runCommand(verb, noun, preposition, directObject) {
     displayText('you can\'t get that');    
   }
   
-  const item = player.inventory.indexOf(noun) 
+  const item = player.inventory.indexOf(noun); 
   if (verb === 'drop' && player.inventory.includes(noun)) {
     player.inventory.splice(item, 1);
     displayText('ok');
@@ -120,7 +120,9 @@ function runCommand(verb, noun, preposition, directObject) {
 
   if (verb === 'throw' && player.inventory.includes(noun)) {
     displayText(`you ${verb} the ${noun} ${preposition} the ${directObject}`);
-    if (directObject === 'tree') {
+    player.inventory.splice(item, 1);
+    console.log(player.inventory); 
+    if (directObject === 'tree') {           
       rock.x = 490;
       rock.y = 360;
     } 

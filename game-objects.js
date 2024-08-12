@@ -17,9 +17,9 @@ export const gameObjects = {
     y: 395,
     r: 5,
     description: 'Looks like a regular rock to me.',
-    canGet: true,
-    canUse: true
+    canGet: true,    
   },
+  
   tree: {
     startX: 500,
     startY: 400,
@@ -31,7 +31,7 @@ export const gameObjects = {
     canGet: false
   },
   sky: {
-    description: 'well, it\'s what\'s up.',
+    description: 'It\'s what\'s up.',
     canGet: false
   },
   grass: {
