@@ -75,7 +75,9 @@ form.onsubmit = (e) => {
 function handleTextInput(str) {
   const textInput = str.toLowerCase();
   const tokens = textInput.split(' ');
-  if (verbs.includes(tokens[0]) && nouns.includes(tokens[1]) && !tokens[2] && !tokens[3]) {
+  if (verbs.includes(tokens[0] && !tokens[1] && !tokens[2])&& !tokens[3]) {
+    runCommand(tokens[0]);    
+  } else if (verbs.includes(tokens[0]) && nouns.includes(tokens[1]) && !tokens[2] && !tokens[3]) {
     runCommand(tokens[0], tokens[1]);
   } else if (verbs.includes(tokens[0]) && nouns.includes(tokens[1]) && prepositions.includes(tokens[2]) && nouns.includes(tokens[3])) {       
     runCommand(tokens[0], tokens[1], tokens[2], tokens[3]);    
@@ -87,8 +89,8 @@ function handleTextInput(str) {
 function runCommand(verb, noun, preposition, directObject) {
   const currentNoun = gameObjects[noun];
   const distance = Math.hypot(currentNoun.x - player.x, currentNoun.y - player.y);
-  if (verb === 'look') {
-    console.log(currentNoun.description);
+  if (verb === 'look') {   
+      console.log(currentNoun.description);    
   } 
   
   if (verb === 'get' && currentNoun.canGet) {
