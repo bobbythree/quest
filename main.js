@@ -76,8 +76,9 @@ form.onsubmit = (e) => {
 function handleTextInput(str) {
   const textInput = str.toLowerCase();
   const tokens = textInput.split(' ');
-  if (verbs.includes(tokens[0] && !tokens[1] && !tokens[2])&& !tokens[3]) {
-    runCommand(tokens[0]);    
+  
+  if (tokens[0] ==='look' && !tokens[1]) {
+    runCommand(tokens[0]);
   } else if (verbs.includes(tokens[0]) && nouns.includes(tokens[1]) && !tokens[2] && !tokens[3]) {
     runCommand(tokens[0], tokens[1]);
   } else if (verbs.includes(tokens[0]) && nouns.includes(tokens[1]) && prepositions.includes(tokens[2]) && nouns.includes(tokens[3])) {       
@@ -85,13 +86,16 @@ function handleTextInput(str) {
   } else {
     displayText('I don\'t understand')
   }
+  
 }
 
 function runCommand(verb, noun, preposition, indirectObject) {
   const currentNoun = gameObjects[noun];  
-  if (verb === 'look') { 
-    displayText(currentNoun.description);            
-  } 
+  if (verb === 'look' && noun === undefined) { 
+    displayText('You are in a clearing. You see a tree to the east.')           
+  } else if (verb === 'look' && nouns.includes(noun)) {
+    displayText(currentNoun.description);
+  }
   
   if (verb === 'get' && currentNoun.canGet) {
     get(noun);          
