@@ -80,60 +80,71 @@ function handleTextInput(str) {
   if (verbs.includes(tokens[0]) && !tokens[1]) {
     runOneWordCommand(tokens[0]);
   } else if (verbs.includes(tokens[0]) && nouns.includes(tokens[1]) && !tokens[2] && !tokens[3]) {
-    runCommand(tokens[0], tokens[1]);
+    runTwoWordCommand(tokens[0], tokens[1]);
   } else if (verbs.includes(tokens[0]) && nouns.includes(tokens[1]) && prepositions.includes(tokens[2]) && nouns.includes(tokens[3])) {       
-    runCommand(tokens[0], tokens[1], tokens[2], tokens[3]);    
+    runFourWordCommand(tokens[0], tokens[1], tokens[2], tokens[3]);    
   } else {
     displayText('I don\'t understand')
   }
   
 }
 
-function runCommand(verb, noun, preposition, indirectObject) {
-  const currentNoun = gameObjects[noun];  
-  if (verb === 'look' && nouns.includes(noun)) {
+//commmand funcs
+function runOneWordCommand(verb) {
+  switch(verb) {
+    case 'look':
+      displayText('You are in a clearing. You see a rock on the ground. To the east stands a lone tree.');
+      break;
+    case 'i':
+    case 'inventory':
+      displayText(`INVENTORY: ${player.inventory}`);
+    break;    
+    default:
+      displayText('Try being more specific.');
+  }
+}
+
+function runTwoWordCommand(verb, noun) {
+  const currentNoun = gameObjects[noun];
+  if (verb === 'look') {
     displayText(currentNoun.description);
-  }  
-  
+  }
+
   if (verb === 'get' && currentNoun.canGet) {
     get(noun);          
   } else if (verb === 'get' && !currentNoun.canGet) {
     displayText('you can\'t get that');    
-  }  
-  
+  }
+
   if (verb === 'drop' && player.inventory.includes(noun)) {
     drop(noun);       
   } else if (verb === 'drop' && !player.inventory.includes(noun)) {
     displayText(`you don\'t have a ${noun}`);
   }
 
-  if (verb === 'throw' && player.inventory.includes(noun) && preposition === undefined && indirectObject === undefined) {
-    displayText(`${verb} ${noun} at what??`);
-  } else if (verb === 'throw' && player.inventory.includes(noun)) {
+  
+  if (verb === 'throw' && !player.inventory.includes(noun)) {
+    displayText(`you don\'t have a ${noun}`);   
+  } else if (verb === 'throw' && nouns.includes(noun)) {
+    displayText(`throw ${noun} at what?`);
+  }
+}
+
+function runFourWordCommand(verb, noun, preposition, indirectObject) {  
+  if (verb === 'throw' && player.inventory.includes(noun)) {
     throwObject(verb, noun, preposition, indirectObject);
   } else if (verb === 'throw' && !player.inventory.includes(noun)) {
     displayText(`you don\'t have a ${noun}`);   
   }  
 }
 
-//funcs
+//helper funcs
 function displayText(str) {
   textDisplay.innerHTML = str;
   setTimeout(() => {
     textDisplay.style.display = 'none'
   }, 3000);
   textDisplay.style.display = 'block';  
-}
-
-function runOneWordCommand(verb) {
-  switch(verb) {
-    case 'look':
-      displayText('You are in a clearing. You see a rock on the ground. To the east stands a lone tree.');
-      break;
-    case 'inventory':
-      displayText(`INVENTORY: ${player.inventory}`);
-      break;
-  }
 }
 
 function get(noun) {
@@ -166,7 +177,7 @@ function throwObject(verb, noun, preposition, indirectObject) {
   if (indirectObject === 'tree') {    
     player.inventory.splice(item, 1);
     console.log(player.inventory);          
-    rock.x = 490;
+    rock.x = 490; //TODO: rewrite not hardcoded as 'rock'
     rock.y = 395;
   } else if (indirectObject === 'sky') {    
     player.inventory.splice(item, 1);
