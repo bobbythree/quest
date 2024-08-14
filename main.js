@@ -77,8 +77,8 @@ function handleTextInput(str) {
   const textInput = str.toLowerCase();
   const tokens = textInput.split(' ');
   
-  if (tokens[0] ==='look' && !tokens[1]) {
-    runCommand(tokens[0]);
+  if (verbs.includes(tokens[0]) && !tokens[1]) {
+    runOneWordCommand(tokens[0]);
   } else if (verbs.includes(tokens[0]) && nouns.includes(tokens[1]) && !tokens[2] && !tokens[3]) {
     runCommand(tokens[0], tokens[1]);
   } else if (verbs.includes(tokens[0]) && nouns.includes(tokens[1]) && prepositions.includes(tokens[2]) && nouns.includes(tokens[3])) {       
@@ -91,11 +91,9 @@ function handleTextInput(str) {
 
 function runCommand(verb, noun, preposition, indirectObject) {
   const currentNoun = gameObjects[noun];  
-  if (verb === 'look' && noun === undefined) { 
-    displayText('You are in a clearing. You see a rock on the ground. To the east stands a lone tree.')           
-  } else if (verb === 'look' && nouns.includes(noun)) {
+  if (verb === 'look' && nouns.includes(noun)) {
     displayText(currentNoun.description);
-  }
+  }  
   
   if (verb === 'get' && currentNoun.canGet) {
     get(noun);          
@@ -125,6 +123,17 @@ function displayText(str) {
     textDisplay.style.display = 'none'
   }, 3000);
   textDisplay.style.display = 'block';  
+}
+
+function runOneWordCommand(verb) {
+  switch(verb) {
+    case 'look':
+      displayText('You are in a clearing. You see a rock on the ground. To the east stands a lone tree.');
+      break;
+    case 'inventory':
+      displayText(`INVENTORY: ${player.inventory}`);
+      break;
+  }
 }
 
 function get(noun) {
@@ -158,7 +167,7 @@ function throwObject(verb, noun, preposition, indirectObject) {
     player.inventory.splice(item, 1);
     console.log(player.inventory);          
     rock.x = 490;
-    rock.y = 360;
+    rock.y = 395;
   } else if (indirectObject === 'sky') {    
     player.inventory.splice(item, 1);
     console.log(player.inventory);
