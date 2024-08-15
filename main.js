@@ -56,7 +56,7 @@ function drawTree() {
 
 //draw rock
 function drawRock() {
-  ctx.fillStyle = 'slategray';
+  ctx.fillStyle = '#50575a';
   ctx.beginPath();
   ctx.arc(rock.x, rock.y, rock.r, 0, Math.PI * 2)
   ctx.fill();
@@ -98,7 +98,7 @@ function runOneWordCommand(verb) {
     case 'i':
     case 'inventory':
       displayText(`INVENTORY: ${player.inventory}`);
-    break;    
+      break;    
     default:
       displayText('Try being more specific.');
   }
@@ -106,6 +106,7 @@ function runOneWordCommand(verb) {
 
 function runTwoWordCommand(verb, noun) {
   const currentNoun = gameObjects[noun];
+
   if (verb === 'look') {
     displayText(currentNoun.description);
   }
@@ -122,7 +123,7 @@ function runTwoWordCommand(verb, noun) {
     displayText(`you don\'t have a ${noun}`);
   }
 
-  
+  //error cases for use, throw, put etc..
   if (verb === 'throw' && !player.inventory.includes(noun)) {
     displayText(`you don\'t have a ${noun}`);   
   } else if (verb === 'throw' && nouns.includes(noun)) {
@@ -172,13 +173,14 @@ function drop(noun) {
 }
 
 function throwObject(verb, noun, preposition, indirectObject) {
+  const currentNoun = gameObjects[noun];
   const item = player.inventory.indexOf(noun);
   displayText(`you ${verb} the ${noun} ${preposition} the ${indirectObject}`);   
   if (indirectObject === 'tree') {    
     player.inventory.splice(item, 1);
     console.log(player.inventory);          
-    rock.x = 490; //TODO: rewrite not hardcoded as 'rock'
-    rock.y = 395;
+    currentNoun.x = tree.startX - (tree.startX - tree.lastX);
+    currentNoun.y = 395;
   } else if (indirectObject === 'sky') {    
     player.inventory.splice(item, 1);
     console.log(player.inventory);
@@ -187,6 +189,6 @@ function throwObject(verb, noun, preposition, indirectObject) {
       rock.x = 400
     }, 4000);
   } else {
-    displayText('why tho?')
+    displayText('why tho?');
   }
 }
