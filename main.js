@@ -3,6 +3,7 @@ import {gameObjects} from './game-objects.js';
 import { verbs } from './game-commands/verbs.js';
 import { nouns } from './game-commands/nouns.js';
 import { prepositions } from './game-commands/prepositions.js';
+import { renderTestScene } from './scenes/test.js';
 
 //html elements
 const textDisplay = document.getElementById('text-display');
@@ -23,43 +24,16 @@ const ctx = canvas.getContext('2d');
 
 //game loop
 function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
-  drawPlayer();
-  drawTree();
-  drawRock();
-  movePlayer();
-  if (player.x <= canvas.width - 600) player.x = canvas.width - 600;
-  if (player.x >= canvas.width - player.w) player.x = canvas.width - player.w;
-  if (player.y <= canvas.height - 400) player.y = canvas.height - 400;
-  if (player.y >= canvas.height - player.w) player.y = canvas.height - player.h;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);  
+  renderScene();
+  movePlayer(); 
 
   requestAnimationFrame(animate)
 }
 animate();
 
-//draw player
-function drawPlayer() {
-  ctx.fillStyle = 'hsl(300, 30%, 60%)';
-  ctx.fillRect(player.x, player.y, player.w, player.h);
-}
-
-//draw tree
-function drawTree() {
-  ctx.fillStyle = "green";
-  ctx.beginPath();
-  ctx.moveTo(tree.startX, tree.startY);
-  ctx.lineTo(tree.nextX, tree.nextY);
-  ctx.lineTo(tree.lastX, tree.lastY);
-  ctx.closePath();
-  ctx.fill();
-}
-
-//draw rock
-function drawRock() {
-  ctx.fillStyle = '#50575a';
-  ctx.beginPath();
-  ctx.arc(rock.x, rock.y, rock.r, 0, Math.PI * 2)
-  ctx.fill();
+function renderScene() {  
+  renderTestScene();
 }
 
 //event listeners
