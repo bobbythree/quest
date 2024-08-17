@@ -3,6 +3,7 @@ import { player, drawPlayer } from './player.js';
 import { verbs } from './game-commands/verbs.js';
 import { nouns } from './game-commands/nouns.js';
 import { prepositions } from './game-commands/prepositions.js';
+import { renderTestScene } from './scenes/testScene.js'
 
 
 //html elements
@@ -22,10 +23,14 @@ function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);  
   drawPlayer();
   movePlayer(); 
-  
+  renderScene()
   requestAnimationFrame(animate)
 }
 animate();
+
+function renderScene() {
+  renderTestScene();  
+}
 
 //event listeners
 window.addEventListener('keydown', keyDown);
@@ -38,19 +43,11 @@ form.onsubmit = (e) => {
   input.value = '';
 }
 
-function handleTextInput(str) {
+function parseText(str) {
   const textInput = str.toLowerCase();
   const tokens = textInput.split(' ');
   
-  if (verbs.includes(tokens[0]) && !tokens[1]) {
-    runOneWordCommand(tokens[0]);
-  } else if (verbs.includes(tokens[0]) && nouns.includes(tokens[1]) && !tokens[2] && !tokens[3]) {
-    runTwoWordCommand(tokens[0], tokens[1]);
-  } else if (verbs.includes(tokens[0]) && nouns.includes(tokens[1]) && prepositions.includes(tokens[2]) && nouns.includes(tokens[3])) {       
-    runFourWordCommand(tokens[0], tokens[1], tokens[2], tokens[3]);    
-  } else {
-    displayText('I don\'t understand')
-  }  
+  
 }
 
 //helper funcs
@@ -62,47 +59,47 @@ function displayText(str) {
   textDisplay.style.display = 'block';  
 }
 
-function get(noun) {
-  const currentNoun = gameObjects[noun];
-  const distance = Math.hypot(currentNoun.x - player.x, currentNoun.y - player.y);
+// function get(noun) {
+//   const currentNoun = gameObjects[noun];
+//   const distance = Math.hypot(currentNoun.x - player.x, currentNoun.y - player.y);
 
-  if (distance < 50) {
-      displayText('ok');
-      currentNoun.x = -100;
-      player.inventory.push(noun);
-      console.log(player.inventory);      
-    } else {
-      displayText('get closer');
-      console.log(distance);      
-    }         
-}
+//   if (distance < 50) {
+//       displayText('ok');
+//       currentNoun.x = -100;
+//       player.inventory.push(noun);
+//       console.log(player.inventory);      
+//     } else {
+//       displayText('get closer');
+//       console.log(distance);      
+//     }         
+// }
 
-function drop(noun) {
-  const currentNoun = gameObjects[noun];
-  const item = player.inventory.indexOf(noun); 
-  player.inventory.splice(item, 1);
-  displayText('ok');
-  currentNoun.x = player.x + 25;  
-  console.log(player.inventory); 
-}
+// function drop(noun) {
+//   const currentNoun = gameObjects[noun];
+//   const item = player.inventory.indexOf(noun); 
+//   player.inventory.splice(item, 1);
+//   displayText('ok');
+//   currentNoun.x = player.x + 25;  
+//   console.log(player.inventory); 
+// }
 
-function throwObject(verb, noun, preposition, indirectObject) {
-  const currentNoun = gameObjects[noun];
-  const item = player.inventory.indexOf(noun);
-  displayText(`you ${verb} the ${noun} ${preposition} the ${indirectObject}`);   
-  if (indirectObject === 'tree') {    
-    player.inventory.splice(item, 1);
-    console.log(player.inventory);          
-    currentNoun.x = tree.startX - (tree.startX - tree.lastX);
-    currentNoun.y = 395;
-  } else if (indirectObject === 'sky') {    
-    player.inventory.splice(item, 1);
-    console.log(player.inventory);
-    rock.x = - 100;
-    setTimeout(() => {
-      rock.x = 400
-    }, 4000);
-  } else {
-    displayText('why tho?');
-  }
-}
+// function throwObject(verb, noun, preposition, indirectObject) {
+//   const currentNoun = gameObjects[noun];
+//   const item = player.inventory.indexOf(noun);
+//   displayText(`you ${verb} the ${noun} ${preposition} the ${indirectObject}`);   
+//   if (indirectObject === 'tree') {    
+//     player.inventory.splice(item, 1);
+//     console.log(player.inventory);          
+//     currentNoun.x = tree.startX - (tree.startX - tree.lastX);
+//     currentNoun.y = 395;
+//   } else if (indirectObject === 'sky') {    
+//     player.inventory.splice(item, 1);
+//     console.log(player.inventory);
+//     rock.x = - 100;
+//     setTimeout(() => {
+//       rock.x = 400
+//     }, 4000);
+//   } else {
+//     displayText('why tho?');
+//   }
+// }
