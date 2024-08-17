@@ -3,7 +3,8 @@ import { player, drawPlayer } from './player.js';
 import { verbs } from './game-commands/verbs.js';
 import { nouns } from './game-commands/nouns.js';
 import { prepositions } from './game-commands/prepositions.js';
-import { renderTestScene } from './scenes/testScene.js'
+import { testSceneObjects, renderTestScene } from './scenes/testScene.js'
+import { parseText } from './parser.js';
 
 
 //html elements
@@ -23,7 +24,7 @@ function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);  
   drawPlayer();
   movePlayer(); 
-  renderScene()
+  renderScene();
   requestAnimationFrame(animate)
 }
 animate();
@@ -39,16 +40,11 @@ window.addEventListener('keyup', keyUp);
 //text input
 form.onsubmit = (e) => {
   e.preventDefault();  
-  handleTextInput(input.value);
+  parseText(input.value);
   input.value = '';
 }
 
-function parseText(str) {
-  const textInput = str.toLowerCase();
-  const tokens = textInput.split(' ');
-  
-  
-}
+
 
 //helper funcs
 function displayText(str) {
@@ -58,6 +54,7 @@ function displayText(str) {
   }, 3000);
   textDisplay.style.display = 'block';  
 }
+
 
 // function get(noun) {
 //   const currentNoun = gameObjects[noun];

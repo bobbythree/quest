@@ -1,1 +1,1 @@
-export const verbs = ['look', 'climb', 'get', 'use', 'give', 'drop', 'open', 'close', 'search', 'talk', 'give', 'push', 'pull', 'throw', 'inventory', 'i'];
+export const verbs = ['look', 'look at', 'talk', 'talk to', 'climb', 'get', 'use', 'give', 'drop', 'open', 'close', 'search', 'give', 'push', 'pull', 'throw'];
