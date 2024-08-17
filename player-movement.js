@@ -1,19 +1,19 @@
-import { gameObjects } from './game-objects.js'
+import { player } from './player.js'
 
 //arrow key controls
 export function keyDown(e) {
   switch(e.key) {
     case 'ArrowLeft':
-      gameObjects.player.leftPressed = true;
+      player.leftPressed = true;
       break;
     case 'ArrowRight':
-      gameObjects.player.rightPressed = true;
+      player.rightPressed = true;
       break;
     case 'ArrowUp':
-      gameObjects.player.upPressed = true;
+      player.upPressed = true;
       break;
     case 'ArrowDown':
-      gameObjects.player.downPressed = true;
+      player.downPressed = true;
       break;
   }
 }
@@ -21,29 +21,29 @@ export function keyDown(e) {
 export function keyUp(e) {
   switch(e.key) {
     case 'ArrowLeft':
-      gameObjects.player.leftPressed = false;
+      player.leftPressed = false;
       break;
     case 'ArrowRight':
-      gameObjects.player.rightPressed = false;
+      player.rightPressed = false;
       break;
     case 'ArrowUp':
-      gameObjects.player.upPressed = false;
+      player.upPressed = false;
       break;
     case 'ArrowDown':
-      gameObjects.player.downPressed = false;
+      player.downPressed = false;
       break;
   }
 }
 
 export function movePlayer() {  
-  if (gameObjects.player.leftPressed == true) gameObjects.player.x -= gameObjects.player.vx;
-  if (gameObjects.player.rightPressed == true) gameObjects.player.x += gameObjects.player.vx;
-  if (gameObjects.player.upPressed == true) gameObjects.player.y -= gameObjects.player.vy;
-  if (gameObjects.player.downPressed == true) gameObjects.player.y += gameObjects.player.vy;
+  if (player.leftPressed == true) player.x -= player.vx;
+  if (player.rightPressed == true) player.x += player.vx;
+  if (player.upPressed == true) player.y -= player.vy;
+  if (player.downPressed == true) player.y += player.vy;
   
   //prevent from sticking to walls
-  if (gameObjects.player.x <= canvas.width - 600) gameObjects.player.x = canvas.width - 600;
-  if (gameObjects.player.x >= canvas.width - gameObjects.player.w) gameObjects.player.x = canvas.width - player.w;
-  if (gameObjects.player.y <= canvas.height - 400) gameObjects.player.y = canvas.height - 400;
-  if (gameObjects.player.y >= canvas.height - gameObjects.player.w) gameObjects.player.y = canvas.height - gameObjects.player.h;  
+  if (player.x <= canvas.width - 600) player.x = canvas.width - 600;
+  if (player.x >= canvas.width - player.w) player.x = canvas.width - player.w;
+  if (player.y <= canvas.height - 400) player.y = canvas.height - 400;
+  if (player.y >= canvas.height - player.w) player.y = canvas.height - player.h;  
 }

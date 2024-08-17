@@ -1,20 +1,15 @@
 import { keyDown, keyUp, movePlayer } from './player-movement.js';
-import {gameObjects} from './game-objects.js';
+import { player, drawPlayer } from './player.js';
 import { verbs } from './game-commands/verbs.js';
 import { nouns } from './game-commands/nouns.js';
 import { prepositions } from './game-commands/prepositions.js';
-import { renderTestScene } from './scenes/test.js';
+
 
 //html elements
 const textDisplay = document.getElementById('text-display');
 const form = document.getElementById('form');
 const input = document.getElementById('input');
 const submit = document.getElementById('submit');
-
-//game objects
-const player = gameObjects.player;
-const tree = gameObjects.tree;
-const rock = gameObjects.rock;
 
 // init Canvas
 const canvas = document.getElementById('canvas');
@@ -25,16 +20,12 @@ const ctx = canvas.getContext('2d');
 //game loop
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);  
-  renderScene();
+  drawPlayer();
   movePlayer(); 
-
+  
   requestAnimationFrame(animate)
 }
 animate();
-
-function renderScene() {  
-  renderTestScene();
-}
 
 //event listeners
 window.addEventListener('keydown', keyDown);
@@ -59,57 +50,6 @@ function handleTextInput(str) {
     runFourWordCommand(tokens[0], tokens[1], tokens[2], tokens[3]);    
   } else {
     displayText('I don\'t understand')
-  }
-  
-}
-
-//commmand funcs
-function runOneWordCommand(verb) {
-  switch(verb) {
-    case 'look':
-      displayText('You are in a clearing. You see a rock on the ground. To the east stands a lone tree.');
-      break;
-    case 'i':
-    case 'inventory':
-      displayText(`INVENTORY: ${player.inventory}`);
-      break;    
-    default:
-      displayText('Try being more specific.');
-  }
-}
-
-function runTwoWordCommand(verb, noun) {
-  const currentNoun = gameObjects[noun];
-
-  if (verb === 'look') {
-    displayText(currentNoun.description);
-  }
-
-  if (verb === 'get' && currentNoun.canGet) {
-    get(noun);          
-  } else if (verb === 'get' && !currentNoun.canGet) {
-    displayText('you can\'t get that');    
-  }
-
-  if (verb === 'drop' && player.inventory.includes(noun)) {
-    drop(noun);       
-  } else if (verb === 'drop' && !player.inventory.includes(noun)) {
-    displayText(`you don\'t have a ${noun}`);
-  }
-
-  //error cases for use, throw, put etc..
-  if (verb === 'throw' && !player.inventory.includes(noun)) {
-    displayText(`you don\'t have a ${noun}`);   
-  } else if (verb === 'throw' && nouns.includes(noun)) {
-    displayText(`throw ${noun} at what?`);
-  }
-}
-
-function runFourWordCommand(verb, noun, preposition, indirectObject) {  
-  if (verb === 'throw' && player.inventory.includes(noun)) {
-    throwObject(verb, noun, preposition, indirectObject);
-  } else if (verb === 'throw' && !player.inventory.includes(noun)) {
-    displayText(`you don\'t have a ${noun}`);   
   }  
 }
 
