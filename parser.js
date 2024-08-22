@@ -35,14 +35,14 @@ export function parseText(str) {
       noDupesCommandArr.push(e)
     }
   });
-  createCommands(noDupesCommandArr);
+  runCommand(noDupesCommandArr);
 }
 
-function createCommands(input) {   
-  console.log(input);
-  
-  
+function runCommand(input) { 
+   verbs[input[0]].action(input[1]) 
 }
+  
+
 
 
 
