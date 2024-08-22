@@ -4,7 +4,6 @@ import { renderTestScene } from './scenes/testScene.js'
 import { parseText } from './parser.js';
 
 //html elements
-const textDisplay = document.getElementById('text-display');
 const form = document.getElementById('form');
 const input = document.getElementById('input');
 const submit = document.getElementById('submit');
@@ -39,17 +38,6 @@ form.onsubmit = (e) => {
   parseText(input.value);
   input.value = '';
 }
-
-//helper funcs
-function displayText(str) {
-  textDisplay.innerHTML = str;
-  setTimeout(() => {
-    textDisplay.style.display = 'none'
-  }, 3000);
-  textDisplay.style.display = 'block';  
-}
-
-
 
 // function get(noun) {
 //   const currentNoun = gameObjects[noun];

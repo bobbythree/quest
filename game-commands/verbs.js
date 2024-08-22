@@ -1,4 +1,6 @@
 import { nouns } from "./nouns";
+import { displayText } from "../parser.js";
+
 
 export const verbs = {
   look: {
@@ -12,13 +14,12 @@ export const verbs = {
   }
 };
 
-function describe(noun) {
-  console.log(nouns[noun].description)
+export function describe(noun) {
+  displayText(nouns[noun].description)
 }
-function get() {
+export function get() {
+  
+}
+export function drop() {
 
 }
-function drop() {
-
-}
-

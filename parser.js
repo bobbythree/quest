@@ -1,7 +1,10 @@
-import { verbs } from './game-commands/verbs.js'
+import { verbs, describe, get, drop } from './game-commands/verbs.js';
 import { nouns } from './game-commands/nouns.js'
 import { prepositions } from './game-commands/prepositions.js'
 import { testSceneObjects } from './scenes/testScene.js';
+
+// html elements
+const textDisplay = document.getElementById('text-display');
 
 export function parseText(str) {
   const textInput = str.toLowerCase();
@@ -19,33 +22,35 @@ export function parseText(str) {
       if (tokens[i].includes(noun)) {
         commandArr.push(noun);
       }
-    }
-    for (const verb in verbs) {
-      if (tokens[i].includes(verb)) {
-        commandArr.push(verb);
-      }
-    }
-  
+    }    
     if (prepositions.includes(tokens[i])) {
       commandArr.push(tokens[i]);
     }
   }
 
   //get rid of dupes
-  let noDupesArr = [];
+  let noDupesCommandArr = [];
   commandArr.forEach((e) => {
-    if (!noDupesArr.includes(e)) {
-      noDupesArr.push(e)
+    if (!noDupesCommandArr.includes(e)) {
+      noDupesCommandArr.push(e)
     }
   });
-  createCommands(noDupesArr);
+  createCommands(noDupesCommandArr);
 }
 
 function createCommands(input) {   
   console.log(input);
   
+  
 }
 
 
 
-
+//helper funcs
+export function displayText(str) {
+  textDisplay.innerHTML = str;
+  setTimeout(() => {
+    textDisplay.style.display = 'none'
+  }, 3000);
+  textDisplay.style.display = 'block';  
+}
