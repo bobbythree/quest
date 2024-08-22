@@ -1,3 +1,5 @@
+import { nouns } from "./nouns";
+
 export const verbs = {
   look: {
     func: describe
@@ -10,12 +12,13 @@ export const verbs = {
   }
 };
 
-function describe() {
-
+function describe(noun) {
+  console.log(nouns[noun].description)
 }
 function get() {
 
 }
 function drop() {
-  
+
 }
+

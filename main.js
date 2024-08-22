@@ -50,6 +50,7 @@ function displayText(str) {
 }
 
 
+
 // function get(noun) {
 //   const currentNoun = gameObjects[noun];
 //   const distance = Math.hypot(currentNoun.x - player.x, currentNoun.y - player.y);

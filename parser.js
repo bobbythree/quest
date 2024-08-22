@@ -10,12 +10,22 @@ export function parseText(str) {
   
   //loop over text input anf identify verbs, nouns, prepositions
   for (let i = 0; i < tokens.length; i++) {
-    if (verbs.includes(tokens[i])) {
-      commandArr.push(tokens[i]);
+    for (const verb in verbs) {
+      if (tokens[i].includes(verb)) {
+        commandArr.push(verb);
+      }
     }
-    if (nouns.includes(tokens[i])) {
-      commandArr.push(tokens[i]);
+    for (const noun in nouns) {
+      if (tokens[i].includes(noun)) {
+        commandArr.push(noun);
+      }
     }
+    for (const verb in verbs) {
+      if (tokens[i].includes(verb)) {
+        commandArr.push(verb);
+      }
+    }
+  
     if (prepositions.includes(tokens[i])) {
       commandArr.push(tokens[i]);
     }
