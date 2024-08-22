@@ -1,11 +1,7 @@
 import { keyDown, keyUp, movePlayer } from './player-movement.js';
-import { player, drawPlayer } from './player.js';
-import { verbs } from './game-commands/verbs.js';
-import { nouns } from './game-commands/nouns.js';
-import { prepositions } from './game-commands/prepositions.js';
-import { testSceneObjects, renderTestScene } from './scenes/testScene.js'
+import { drawPlayer } from './player.js';
+import { renderTestScene } from './scenes/testScene.js'
 import { parseText } from './parser.js';
-
 
 //html elements
 const textDisplay = document.getElementById('text-display');
@@ -43,8 +39,6 @@ form.onsubmit = (e) => {
   parseText(input.value);
   input.value = '';
 }
-
-
 
 //helper funcs
 function displayText(str) {
