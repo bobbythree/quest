@@ -16,35 +16,38 @@ export function parseText(str) {
     for (const verb in verbs) {
       if (tokens[i].includes(verb)) {
         commandArr.push(verb);
-      }
+      } 
     }
     for (const noun in nouns) {
       if (tokens[i].includes(noun)) {
         commandArr.push(noun);
-      }
+      } 
     }    
     if (prepositions.includes(tokens[i])) {
       commandArr.push(tokens[i]);
-    }
+    } else displayText('try saying that another way')
   }
 
   //get rid of dupes
   let noDupesCommandArr = [];
   commandArr.forEach((e) => {
     if (!noDupesCommandArr.includes(e)) {
-      noDupesCommandArr.push(e)
+      noDupesCommandArr.push(e);
     }
   });
   runCommand(noDupesCommandArr);
 }
 
-function runCommand(input) { 
-   verbs[input[0]].action(input[1]) 
+//run commands
+function runCommand(input) {
+  const verbsArr = Object.keys(verbs);
+  const nounsArr = Object.keys(nouns);
+  if (verbsArr.includes(input[0]) && !input[1]) {
+    displayText(`${input[0]} what?`);
+  } else if (verbsArr.includes(input[0]) && nounsArr.includes(input[1])) {
+    verbs[input[0]].action(input[1]);
+  } 
 }
-  
-
-
-
 
 //helper funcs
 export function displayText(str) {
@@ -54,3 +57,4 @@ export function displayText(str) {
   }, 3000);
   textDisplay.style.display = 'block';  
 }
+

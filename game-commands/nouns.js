@@ -1,11 +1,11 @@
 export const nouns = {
   tree: {
     description: 'It\'s an evergreen tree',
-    canGet: true
+    canGet: false
   },
   rock: {
     description: 'Looks like a regular rock to me.',
-    canGet: false
+    canGet: true
   },
   sky: {
     description: 'It\'s what\'s up.',
