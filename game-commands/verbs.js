@@ -1,7 +1,8 @@
 import { nouns } from "./nouns";
 import { displayText } from "../parser.js";
-import { testSceneObjects } from "../scenes/testScene.js";
+import { testSceneObjects } from "../scenes/testSceneBuild.js";
 import { player } from "../player.js";
+import { scenes } from "../sceneRenders.js";
 
 
 export const verbs = {

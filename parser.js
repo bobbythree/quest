@@ -1,7 +1,8 @@
 import { verbs, describe, get, drop } from './game-commands/verbs.js';
 import { nouns } from './game-commands/nouns.js'
 import { prepositions } from './game-commands/prepositions.js'
-import { testSceneObjects } from './scenes/testScene.js';
+import { testSceneObjects } from './scenes/testSceneBuild.js';
+import { scenes } from './sceneRenders.js';
 
 // html elements
 const textDisplay = document.getElementById('text-display');
@@ -11,7 +12,7 @@ export function parseText(str) {
   const tokens = textInput.split(' ');
   const commandArr = [];
   
-  //loop over text input anf identify verbs, nouns, prepositions
+  //loop over text input. identify verbs, nouns, prepositions
   for (let i = 0; i < tokens.length; i++) {
     for (const verb in verbs) {
       if (tokens[i].includes(verb)) {

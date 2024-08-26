@@ -1,6 +1,6 @@
 import { keyDown, keyUp, movePlayer } from './player-movement.js';
 import { drawPlayer } from './player.js';
-import { renderTestScene } from './scenes/testScene.js'
+import { renderTestScene } from './scenes/testSceneBuild.js'
 import { parseText } from './parser.js';
 import { scenes } from './sceneRenders.js';
 
