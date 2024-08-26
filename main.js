@@ -2,6 +2,7 @@ import { keyDown, keyUp, movePlayer } from './player-movement.js';
 import { drawPlayer } from './player.js';
 import { renderTestScene } from './scenes/testScene.js'
 import { parseText } from './parser.js';
+import { scenes } from './sceneRenders.js';
 
 //html elements
 const form = document.getElementById('form');
@@ -14,18 +15,23 @@ canvas.width = 600;
 canvas.height = 400;
 const ctx = canvas.getContext('2d');
 
-//game loop
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);  
-  drawPlayer();
-  movePlayer(); 
-  renderScene();
-  requestAnimationFrame(animate)
+//init game
+window.onload = () => {
+  gameLoop('test')
 }
-animate();
 
-function renderScene() {
-  renderTestScene();  
+//game loop
+function gameLoop(scene) {  
+  ctx.clearRect(0, 0, canvas.width, canvas.height);   
+  drawPlayer();
+  movePlayer();
+  renderScene(scene);
+  requestAnimationFrame(() => gameLoop);
+}
+
+
+function renderScene(scene) {
+  scenes[scene].render();
 }
 
 //event listeners

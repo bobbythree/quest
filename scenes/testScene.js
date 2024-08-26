@@ -11,6 +11,12 @@ export const testSceneObjects = {
     nextY: 350,
     lastX: 480,
     lastY: 400,    
+  },
+  sky: {
+    
+  },
+  grass: {
+
   }
 } 
 
@@ -45,4 +51,3 @@ export function renderTestScene() {
   testScene.drawTree();
   testScene.drawRock();
 }
-

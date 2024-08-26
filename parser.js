@@ -25,7 +25,7 @@ export function parseText(str) {
     }    
     if (prepositions.includes(tokens[i])) {
       commandArr.push(tokens[i]);
-    } else displayText('try saying that another way')
+    } else displayText('huh?')
   }
 
   //get rid of dupes
