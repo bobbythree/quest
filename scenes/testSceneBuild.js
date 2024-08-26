@@ -1,3 +1,5 @@
+import { scenes } from "../sceneRenders";
+
 export const testSceneObjects = {  
   rock: {
     x: 300,
@@ -27,7 +29,7 @@ class TestScene {
     
   } 
   drawTree() {
-    const tree = testSceneObjects.tree;
+    const tree = scenes.test.objects.tree;
     ctx.fillStyle = "green";
     ctx.beginPath();
     ctx.moveTo(tree.startX, tree.startY);
@@ -37,7 +39,7 @@ class TestScene {
     ctx.fill();
   }
   drawRock() {
-    const rock = testSceneObjects.rock;
+    const rock = scenes.test.objects.rock;
     ctx.fillStyle = '#50575a';
     ctx.beginPath();
     ctx.arc(rock.x, rock.y, rock.r, 0, Math.PI * 2)

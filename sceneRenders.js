@@ -26,4 +26,4 @@ export const scenes = {
     } 
   }
 }
-console.log(scenes.test.objects.rock);
+

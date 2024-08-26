@@ -26,7 +26,7 @@ export function get(noun) {
   const distance = Math.hypot(testSceneObjects[noun].x - player.x, testSceneObjects[noun].y - player.y);
   if (nouns[noun].canGet) {
     displayText(`you pick up the ${noun}`);
-    testSceneObjects[noun].x = -100;
+    scenes.test.objects[noun].x = -100;
     player.inventory.push(noun);
     console.log(player.inventory);
     
@@ -38,11 +38,11 @@ export function get(noun) {
 export function drop(noun) {
   if (player.inventory.includes(noun)) {
     displayText(`you drop the ${noun}`);
-    testSceneObjects[noun].x = player.x + 30;
+    scenes.test.objects[noun].x = player.x + 30;
     const item = player.inventory.indexOf(noun); 
     player.inventory.splice(item, 1);
     console.log(player.inventory);    
   } else {
-    displayText(`you don\'t have a ${noun}!`)
+    displayText(`you don\'t have a ${noun}!`);
   }  
 }

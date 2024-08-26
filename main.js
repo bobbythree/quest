@@ -29,7 +29,6 @@ function gameLoop(scene) {
   requestAnimationFrame(() => gameLoop(scene));
 }
 
-
 function renderScene(scene) {
   scenes[scene].render();
 }
