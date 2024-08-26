@@ -26,7 +26,7 @@ function gameLoop(scene) {
   drawPlayer();
   movePlayer();
   renderScene(scene);
-  requestAnimationFrame(() => gameLoop);
+  requestAnimationFrame(() => gameLoop(scene));
 }
 
 
