@@ -192,3 +192,4 @@ function throwObject(verb, noun, preposition, indirectObject) {
     displayText('why tho?');
   }
 }
+console.log('testing')
